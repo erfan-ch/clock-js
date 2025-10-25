@@ -284,6 +284,10 @@
         background: #4a5463;
         border-radius: 50%;
       }
+
+      .transition-none {
+        transition: none;
+      }
     </style>
   </head>
   <body>
@@ -327,18 +331,29 @@
       const secondHandEl = document.querySelector(".second-hand");
       const minuteHandEl = document.querySelector(".min-hand");
       const hourHandEl = document.querySelector(".hour-hand");
+      const hands = document.querySelectorAll(".hand");
+      const resetTransition = function () {
+        hands.forEach((hand) => {
+          hand.classList.add("transition-none");
+        });
+        setTimeout(function () {
+          hands.forEach((hand) => {
+            hand.classList.remove("transition-none");
+          });
+        }, 1000);
+      };
       const setDate = function () {
         const now = new Date();
         const seconds = now.getSeconds();
         const minutes = now.getMinutes() * 60 + seconds;
         const hours = (now.getHours() % 12) * 60 * 60 + seconds;
-        const secondHandDegree = 360 / 60;
-        const minuteHandDegree = 360 / 3600;
-        const hourHandDegree = 360 / 43200;
-        console.log(seconds, seconds * secondHandDegree);
-        secondHandEl.style.transform = `rotate(${secondHandDegree * seconds + 90}deg)`;
-        minuteHandEl.style.transform = `rotate(${minuteHandDegree * minutes + 90}deg)`;
-        hourHandEl.style.transform = `rotate(${hours * hourHandDegree + 90}deg)`;
+        const secondHandDegree = (360 / 60) * seconds + 90;
+        const minuteHandDegree = (360 / 3600) * minutes + 90;
+        const hourHandDegree = (360 / 43200) * hours + 90;
+        secondHandEl.style.transform = `rotate(${secondHandDegree}deg)`;
+        minuteHandEl.style.transform = `rotate(${minuteHandDegree}deg)`;
+        hourHandEl.style.transform = `rotate(${hourHandDegree}deg)`;
+        if (seconds === 0) resetTransition();
       };
 
       setInterval(setDate, 1000);
