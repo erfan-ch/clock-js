@@ -1,75 +1,347 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>JS + CSS Clock</title>
-  <link rel="icon" href="https://fav.farm/🔥" />
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neumorphism - Clock - JS</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
+      .page-background {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        min-height: 100vh;
+        background: #e0e5ec;
+        font-family: "Helvetica Neue", "Arial", sans-serif;
+      }
 
-    <div class="clock">
-      <div class="clock-face">
-        <div class="hand hour-hand"></div>
-        <div class="hand min-hand"></div>
-        <div class="hand second-hand"></div>
+      .clock-container {
+        max-width: 333px;
+        max-height: 444px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .clock-face {
+        width: 300px;
+        height: 300px;
+        background-color: #e0e5ec;
+        border-radius: 50%;
+        box-shadow:
+          12px 12px 24px #a3b1c6,
+          -12px -12px 24px #ffffff;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .clock-face::before {
+        content: "";
+        position: absolute;
+        width: 92%;
+        height: 92%;
+        background-color: transparent;
+        border-radius: 50%;
+        box-shadow:
+          inset 8px 8px 16px #a3b1c6,
+          inset -8px -8px 16px #ffffff;
+      }
+
+      .marker {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      .marker-dot {
+        position: absolute;
+        top: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: #e0e5ec;
+        box-shadow:
+          inset 1px 1px 2px #a3b1c6,
+          inset -1px -1px 2px #ffffff;
+      }
+
+      .marker-1 {
+        transform: rotate(30deg);
+      }
+      .marker-2 {
+        transform: rotate(60deg);
+      }
+      .marker-3 {
+        transform: rotate(90deg);
+      }
+      .marker-3 .marker-dot {
+        width: 8px;
+        height: 8px;
+      }
+      .marker-4 {
+        transform: rotate(120deg);
+      }
+      .marker-5 {
+        transform: rotate(150deg);
+      }
+      .marker-6 {
+        transform: rotate(180deg);
+      }
+      .marker-6 .marker-dot {
+        width: 8px;
+        height: 8px;
+      }
+      .marker-7 {
+        transform: rotate(210deg);
+      }
+      .marker-8 {
+        transform: rotate(240deg);
+      }
+      .marker-9 {
+        transform: rotate(270deg);
+      }
+      .marker-9 .marker-dot {
+        width: 8px;
+        height: 8px;
+      }
+      .marker-10 {
+        transform: rotate(300deg);
+      }
+      .marker-11 {
+        transform: rotate(330deg);
+      }
+      .marker-12 {
+        transform: rotate(360deg);
+      }
+      .marker-12 .marker-dot {
+        width: 8px;
+        height: 8px;
+      }
+
+      .number {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 600;
+        color: #b8c1d1;
+        text-shadow:
+          1px 1px 1px #ffffff,
+          -1px -1px 1px #a3b1c6;
+        z-index: 2;
+      }
+
+      .number-1 {
+        transform: rotate(30deg);
+      }
+      .number-1-text {
+        display: inline-block;
+        transform: translateY(35px) rotate(-30deg);
+      }
+      .number-2 {
+        transform: rotate(60deg);
+      }
+      .number-2-text {
+        display: inline-block;
+        transform: translateY(35px) rotate(-60deg);
+      }
+      .number-3 {
+        transform: rotate(90deg);
+      }
+      .number-3-text {
+        display: inline-block;
+        transform: translateY(35px) rotate(-90deg);
+      }
+      .number-4 {
+        transform: rotate(120deg);
+      }
+      .number-4-text {
+        display: inline-block;
+        transform: translateY(35px) rotate(-120deg);
+      }
+      .number-5 {
+        transform: rotate(150deg);
+      }
+      .number-5-text {
+        display: inline-block;
+        transform: translateY(35px) rotate(-150deg);
+      }
+      .number-6 {
+        transform: rotate(180deg);
+      }
+      .number-6-text {
+        display: inline-block;
+        transform: translateY(35px) rotate(-180deg);
+      }
+      .number-7 {
+        transform: rotate(210deg);
+      }
+      .number-7-text {
+        display: inline-block;
+        transform: translateY(35px) rotate(-210deg);
+      }
+      .number-8 {
+        transform: rotate(240deg);
+      }
+      .number-8-text {
+        display: inline-block;
+        transform: translateY(35px) rotate(-240deg);
+      }
+      .number-9 {
+        transform: rotate(270deg);
+      }
+      .number-9-text {
+        display: inline-block;
+        transform: translateY(35px) rotate(-270deg);
+      }
+      .number-10 {
+        transform: rotate(300deg);
+      }
+      .number-10-text {
+        display: inline-block;
+        transform: translateY(35px) rotate(-300deg);
+      }
+      .number-11 {
+        transform: rotate(330deg);
+      }
+      .number-11-text {
+        display: inline-block;
+        transform: translateY(35px) rotate(-330deg);
+      }
+      .number-12 {
+        transform: rotate(360deg);
+      }
+      .number-12-text {
+        display: inline-block;
+        transform: translateY(35px) rotate(-360deg);
+      }
+
+      .hand {
+        position: absolute;
+        transform-origin: 100%;
+        border-radius: 10px 0 0 10px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+        transition: all 0.05s ease-in-out;
+        transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+      }
+
+      .hour-hand {
+        width: 18%;
+        height: 8px;
+        background: #4a5463;
+        z-index: 5;
+        right: 50%;
+      }
+
+      .min-hand {
+        width: 27%;
+        height: 6px;
+        background: #7a8a9e;
+        z-index: 6;
+        right: 50%;
+      }
+
+      .second-hand {
+        width: 33%;
+        height: 3px;
+        background: #e65e5e;
+        z-index: 7;
+        right: 50%;
+      }
+
+      .center-pin {
+        width: 20px;
+        height: 20px;
+        background: #e0e5ec;
+        border-radius: 50%;
+        position: absolute;
+        z-index: 10;
+        box-shadow:
+          inset 3px 3px 6px #a3b1c6,
+          inset -3px -3px 6px #ffffff;
+      }
+
+      .center-pin::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 6px;
+        height: 6px;
+        background: #4a5463;
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-background">
+      <div class="clock-container">
+        <div class="clock-face">
+          <div class="marker marker-1"><div class="marker-dot"></div></div>
+          <div class="marker marker-2"><div class="marker-dot"></div></div>
+          <div class="marker marker-3"><div class="marker-dot"></div></div>
+          <div class="marker marker-4"><div class="marker-dot"></div></div>
+          <div class="marker marker-5"><div class="marker-dot"></div></div>
+          <div class="marker marker-6"><div class="marker-dot"></div></div>
+          <div class="marker marker-7"><div class="marker-dot"></div></div>
+          <div class="marker marker-8"><div class="marker-dot"></div></div>
+          <div class="marker marker-9"><div class="marker-dot"></div></div>
+          <div class="marker marker-10"><div class="marker-dot"></div></div>
+          <div class="marker marker-11"><div class="marker-dot"></div></div>
+          <div class="marker marker-12"><div class="marker-dot"></div></div>
+
+          <div class="number number-1"><span class="number-1-text">1</span></div>
+          <div class="number number-2"><span class="number-2-text">2</span></div>
+          <div class="number number-3"><span class="number-3-text">3</span></div>
+          <div class="number number-4"><span class="number-4-text">4</span></div>
+          <div class="number number-5"><span class="number-5-text">5</span></div>
+          <div class="number number-6"><span class="number-6-text">6</span></div>
+          <div class="number number-7"><span class="number-7-text">7</span></div>
+          <div class="number number-8"><span class="number-8-text">8</span></div>
+          <div class="number number-9"><span class="number-9-text">9</span></div>
+          <div class="number number-10"><span class="number-10-text">10</span></div>
+          <div class="number number-11"><span class="number-11-text">11</span></div>
+          <div class="number number-12"><span class="number-12-text">12</span></div>
+
+          <div class="hand hour-hand"></div>
+          <div class="hand min-hand"></div>
+          <div class="hand second-hand"></div>
+          <div class="center-pin"></div>
+        </div>
       </div>
     </div>
+    <script>
+      const secondHandEl = document.querySelector(".second-hand");
+      const minuteHandEl = document.querySelector(".min-hand");
+      const hourHandEl = document.querySelector(".hour-hand");
+      const setDate = function () {
+        const now = new Date();
+        const seconds = now.getSeconds();
+        const minutes = now.getMinutes() * 60 + seconds;
+        const hours = (now.getHours() % 12) * 60 * 60 + seconds;
+        const secondHandDegree = 360 / 60;
+        const minuteHandDegree = 360 / 3600;
+        const hourHandDegree = 360 / 43200;
+        console.log(seconds, seconds * secondHandDegree);
+        secondHandEl.style.transform = `rotate(${secondHandDegree * seconds + 90}deg)`;
+        minuteHandEl.style.transform = `rotate(${minuteHandDegree * minutes + 90}deg)`;
+        hourHandEl.style.transform = `rotate(${hours * hourHandDegree + 90}deg)`;
+      };
 
-
-  <style>
-    html {
-      background: #018DED url(https://unsplash.it/1500/1000?image=881&blur=5);
-      background-size: cover;
-      font-family: 'helvetica neue';
-      text-align: center;
-      font-size: 10px;
-    }
-
-    body {
-      margin: 0;
-      font-size: 2rem;
-      display: flex;
-      flex: 1;
-      min-height: 100vh;
-      align-items: center;
-    }
-
-    .clock {
-      width: 30rem;
-      height: 30rem;
-      border: 20px solid white;
-      border-radius: 50%;
-      margin: 50px auto;
-      position: relative;
-      padding: 2rem;
-      box-shadow:
-        0 0 0 4px rgba(0,0,0,0.1),
-        inset 0 0 0 3px #EFEFEF,
-        inset 0 0 10px black,
-        0 0 10px rgba(0,0,0,0.2);
-    }
-
-    .clock-face {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transform: translateY(-3px); 
-    }
-
-    .hand {
-      width: 50%;
-      height: 6px;
-      background: black;
-      position: absolute;
-      top: 50%;
-    }
-
-  </style>
-
-  <script>
-
-
-  </script>
-</body>
+      setInterval(setDate, 1000);
+    </script>
+  </body>
 </html>
